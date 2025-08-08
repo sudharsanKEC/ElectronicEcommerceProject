@@ -1,0 +1,37 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20250808200125
+Username: DESKTOP-PN81Q0T\WELCOME
+RunAs User: DESKTOP-PN81Q0T\WELCOME
+Configuration Name: 
+Machine: DESKTOP-PN81Q0T (Microsoft Windows NT 10.0.26100.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -noexit -command try { . "c:\Users\WELCOME\AppData\Local\Programs\Microsoft VS Code\resources\app\out\vs\workbench\contrib\terminal\common\scripts\shellIntegration.ps1" } catch {}
+Process ID: 6024
+PSVersion: 5.1.26100.4652
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.4652
+BuildVersion: 10.0.26100.4652
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is ./terminal_log.txt
+]633;D;0]633;A]633;P;Cwd=D:\x5cEcommerceDjango\x5cee_commercePS D:\EcommerceDjango\ee_commerce> ]633;B
+(virtual_Env) pip freeze > requirements.txt
+>> ParameterBinding(Out-File): name="InputObject"; value="asgiref==3.9.1"
+>> ParameterBinding(Out-File): name="InputObject"; value="Django==5.2.5"
+>> ParameterBinding(Out-File): name="InputObject"; value="setuptools==80.9.0"
+>> ParameterBinding(Out-File): name="InputObject"; value="sqlparse==0.5.3"
+>> ParameterBinding(Out-File): name="InputObject"; value="tzdata==2025.2"
+>> ParameterBinding(Out-File): name="InputObject"; value="wheel==0.45.1"
+]633;D;0]633;A]633;P;Cwd=D:\x5cEcommerceDjango\x5cee_commercePS D:\EcommerceDjango\ee_commerce> ]633;B
+(virtual_Env) git remote add -origin https://github.com/sudharsanKEC/ElectronicEcommerceProject.git
+
+]633;D;0]633;A]633;P;Cwd=D:\x5cEcommerceDjango\x5cee_commercePS D:\EcommerceDjango\ee_commerce> ]633;B
+(virtual_Env) git remote add origin https://github.com/sudharsanKEC/ElectronicEcommerceProject.git
+
+]633;D;0]633;A]633;P;Cwd=D:\x5cEcommerceDjango\x5cee_commercePS D:\EcommerceDjango\ee_commerce> ]633;B
+(virtual_Env) git branch -M main
+
+]633;D;0]633;A]633;P;Cwd=D:\x5cEcommerceDjango\x5cee_commercePS D:\EcommerceDjango\ee_commerce> ]633;B
