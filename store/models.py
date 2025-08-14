@@ -22,3 +22,33 @@ class District(models.Model):
 # python manage.py makemigrations - This command generates a migration file (SQL instructions for your DB).
 # python manage.py migrate - This will create the District table with all fields in your database.
 # After migrating, Django automatically names your database table based on: <app_name>_<model_name_lowercase>, Eg:store_district. 
+
+class WebAppAdmin(models.Model):
+    DISTRICT_CHOICES = [
+        ('ER','Erode'),
+        ('CBE','Coimbatore'),
+        ('TPR','Tiruppur'),
+        ('SLM','Salem'),
+        ('NKL','Namakkal'),
+        ('KRR','Karur')
+    ]
+    name = models.CharField(max_length=100)
+    email = models.EmailField(unique=True)
+    password = models.CharField(max_length=100)
+    district = models.CharField(max_length=3, choices=DISTRICT_CHOICES) # when district is choosen, the corresponding DT code will be saved in this district variable.
+    unique_id = models.CharField(max_length=20, unique=True, editable=False)
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
+
+    def save(self, *args, **kwargs):
+        if not self.unique_id:
+            district_code = self.district # gets the district value(which was the code already stored)
+            count = WebAppAdmin.objects.filter(district=self.district).count()+1
+            count_str = str(count).zfill(3) #Formats the count with leading zeros. Example: 5 → "005".
+            self.unique_id = f"{district_code}_WAA_{count_str}"
+        super().save(*args, **kwargs)
+    def __str__(self):
+        return f"{self.name}({self.unique_id})"
+
+
+
