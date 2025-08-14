@@ -4,4 +4,4 @@ from .models import *
 # Create your views here.
 
 def rolePage(request):
-    return HttpResponse("Roles Page")
+    return render(request,"RoleSelection.html")
