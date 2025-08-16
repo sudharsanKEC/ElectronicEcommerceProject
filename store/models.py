@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.core.exceptions import ValidationError
 # Create your models here.
 class District(models.Model):
     district_id = models.AutoField(primary_key = True)
@@ -49,6 +49,52 @@ class WebAppAdmin(models.Model):
         super().save(*args, **kwargs)
     def __str__(self):
         return f"{self.name}({self.unique_id})"
+
+class Shop(models.Model):
+    shop_id = models.AutoField(primary_key = True)
+    district = models.ForeignKey(District, on_delete = models.CASCADE,related_name="shops")
+    shop_name = models.CharField(max_length=150)
+    address = models.TextField()
+    unique_id = models.CharField(max_length=50, unique=True, editable=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    status = models.CharField(
+        max_length = 8,
+        choices = [('active','Active'),('inactive','Inactive')],
+        default='active'
+    )
+
+    def save(self, *args, **kwargs):
+        if not self.unique_id:
+            district_code = self.district.district_code.upper()
+            shop_count = Shop.objects.filter(district=self.district).count()+1
+            self.unique_id = f"{district_code}_SHOP_{shop_count:03d}"
+        super().save(*args, **kwargs)
+    def __str__(self):
+        return f"{self.shop_name} ({self.unique_id})"
+
+
+class ShopAdmin(models.Model):
+    admin_id = models.CharField(max_length=100,unique=True,editable=False)
+    admin_name = models.CharField(max_length = 100,blank=False,null=False)
+    email = models.EmailField(unique=True)
+    password = models.CharField(max_length=100,blank=False,null=False)
+    shop = models.ForeignKey(Shop,on_delete=models.CASCADE,related_name="admins")
+    region = models.CharField(max_length=100,blank=False,null=False)
+    
+    def save(self, *args, **kwargs):
+        if not self.admin_id:
+            district_code = self.shop.district.district_code.upper()
+            shop_number = self.shop.unique_id.split("_")[-1]
+            admin_count = ShopAdmin.objects.filter(shop=self.shop).count() + 1
+            if admin_count > 2:
+                raise ValidationError("A shop can only have 2 admins.")
+            self.admin_id = f"{district_code}_SH{shop_number}_{admin_count:03d}"
+        super().save(*args, **kwargs)
+    def __str__(self):
+        return f"{self.admin_name} ({self.admin_id})"
+
+
 
 
 
