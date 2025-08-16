@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web app admin login page</title>
+    {%if messages %}
+    {% for message in messages %}
+        {{message}}
+    {% endfor %}
+    {% endif %}
+</head>
+<body>
+    <form method = "POST" action="{%url 'waaValidation'%}">
+        {% csrf_token %}
+
+        <label for="email">Enter your email:</label>
+        <input type="email" id="email" name="email" required>
+        <br><br>
+        
+        <label for="password">Enter your password:</label>
+        <input type="password" id="password" name="password" required>
+        <br><br>
+
+        <label for="location">Select Region:</label>
+        <select name="location" id="location">
+            <option disbaled select hidden>Select</option>
+            <option value="ER">Erode</option>
+            <option value="CBE">Coimbatore</option>
+            <option value="KRR">Karur</option>
+            <option value="TPR">Tiruppur</option>
+            <option value="SLM">Salem</option>
+            <option value="NKL">Namakkal</option>
+        </select>
+
+        <br><br>
+        <button type="submit">Login</button>
+    </form>
+</body>
+</html>
