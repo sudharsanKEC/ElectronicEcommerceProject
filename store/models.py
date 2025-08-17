@@ -66,7 +66,7 @@ class Shop(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.unique_id:
-            district_code = self.district.district_code.upper()
+            district_code = self.district.district_name.upper()
             shop_count = Shop.objects.filter(district=self.district).count()+1
             self.unique_id = f"{district_code}_SHOP_{shop_count:03d}"
         super().save(*args, **kwargs)

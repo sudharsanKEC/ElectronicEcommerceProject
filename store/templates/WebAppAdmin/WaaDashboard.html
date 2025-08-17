@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebApp Admin Dashboard page</title>
+</head>
+<body>
+    <h1>Welcome, Regional Admin {{ appAdmin.name }}</h1>
+    <h2>Your Region: {{ appAdmin.get_district_display }}</h2>
+    <h2>Your unique Id: {{ appAdmin.unique_id }}</h2>
+
+    <h3>Existing shops in your region</h3>
+    <table border="1" cellpadding="5" cellspacing="0">
+        <tr>
+            <th>Shop Id</th>
+            <th>Shop name</th>
+            <th>Shop District</th>
+        </tr>
+        {% for shop in shops %}
+            {% for admin in shop.admins.all %}
+                <tr>
+                    {% if forloop.first %}
+                        <td rowspan="{{ shop.admins.count }}">{{ shop.unique_id }}</td>
+                        <td rowspan="{{ shop.admins.count }}">{{ shop.name }}</td>
+                    {% endif %}
+                    <td>{{ admin.admin_name }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td>{{ shop.unique_id }}</td>
+                    <td>{{ shop.name }}</td>
+                    <td>No admins</td>
+                </tr>
+            {% endfor %}
+        {% empty %}
+                <tr>
+                    <td colspan="3">No shops found in this region</td>
+                </tr>
+        {% endfor %}
+    </table>
+
+    <h3>Add a new shop client in your region: </h3>
+    <form method="POST">
+        {% csrf_token %}
+        
+    </form>
+</body>
+</html>
