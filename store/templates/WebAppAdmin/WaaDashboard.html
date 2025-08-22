@@ -12,32 +12,28 @@
 
     <h3>Existing shops in your region</h3>
     <table border="1" cellpadding="5" cellspacing="0">
+    <tr>
+        <th>Shop Id</th>
+        <th>Shop Name</th>
+        <th>Admin Name</th>
+    </tr>
+    {% for shop in shops %}
         <tr>
-            <th>Shop Id</th>
-            <th>Shop name</th>
-            <th>Shop District</th>
+            <td>{{ shop.shop_unique_id }}</td>
+            <td>{{ shop.shop_name }}</td>
+            <td>
+                {% if shop.admin %}
+                    {{ shop.admin.admin_name }}
+                {% else %}
+                    No admin
+                {% endif %}
+            </td>
         </tr>
-        {% for shop in shops %}
-            {% for admin in shop.admins.all %}
-                <tr>
-                    {% if forloop.first %}
-                        <td rowspan="{{ shop.admins.count }}">{{ shop.unique_id }}</td>
-                        <td rowspan="{{ shop.admins.count }}">{{ shop.name }}</td>
-                    {% endif %}
-                    <td>{{ admin.admin_name }}</td>
-                </tr>
-            {% empty %}
-                <tr>
-                    <td>{{ shop.unique_id }}</td>
-                    <td>{{ shop.name }}</td>
-                    <td>No admins</td>
-                </tr>
-            {% endfor %}
-        {% empty %}
-                <tr>
-                    <td colspan="3">No shops found in this region</td>
-                </tr>
-        {% endfor %}
+    {% empty %}
+        <tr>
+            <td colspan="3">No shops found in this region</td>
+        </tr>
+    {% endfor %}
     </table>
 
     {% if messages %}

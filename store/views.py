@@ -55,7 +55,16 @@ def shopCreation(request):
         admin = WebAppAdmin.objects.get(unique_id=unique_id)
         # shop_district = admin.district
         # print(f"{shop_district}")
-        dist_obj = District.objects.filter(district_name = admin.district).first()
+        print("Admin dt:{admin.district}")
+        districts = {
+            "ER":"Erode",
+            "CBE":"Coimbatore",
+            "TPR":"TIRUPPUR",
+            "KRR":"KARUR",
+            "NKL":"NAMAKKAL",
+            "SLM":"SALEM"
+        }
+        dist_obj = District.objects.filter(district_name = districts[admin.district]).first()
         shop_name = request.POST["shop_name"]
         shop_address = request.POST["shop_address"]
         if Shop.objects.filter(shop_name=shop_name,district=dist_obj,address=shop_address).exists():
