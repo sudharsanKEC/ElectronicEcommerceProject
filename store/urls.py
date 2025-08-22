@@ -6,6 +6,6 @@ urlpatterns = [
     path("",views.rolePage,name = "role_page"),
     path("webAppAdmin-login/",views.webAppAdminLogin,name = "waaLogin"),
     path("webAppAdminValidation/",views.webAdminValidation,name = "waaValidation"),
-    path("WebAppAdminDashboard/<str:unique_id>",views.webAppAdminDashboard,name="waaDashboard")
-
+    path("WebAppAdminDashboard/<str:unique_id>",views.webAppAdminDashboard,name="waaDashboard"),
+    path("ShopCreation/",views.shopCreation,name="shopCreation"),
 ]

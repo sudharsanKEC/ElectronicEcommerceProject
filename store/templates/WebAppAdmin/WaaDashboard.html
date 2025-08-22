@@ -40,10 +40,22 @@
         {% endfor %}
     </table>
 
+    {% if messages %}
+    {% for message in messages %}
+        {{message }}
+    {%endfor%}
+    {%endif%}
+
     <h3>Add a new shop client in your region: </h3>
-    <form method="POST">
+    <form method="POST" action="{%url 'shopCreation' %}">
         {% csrf_token %}
-        
+        <input type="hidden" name="unique_id" value="{{ appAdmin.unique_id }}">
+        <label>Shop name: </label>
+        <input type="text" id="shop_name" name="shop_name" required> <br><br>
+        <label>Enter the address of the shop</label>
+        <textarea id="shop_address" name="shop_address" rows="7" cols="50" placeholder="Enter full address"></textarea> <br><br>
+        <button type="submit">Add shop</button>
+
     </form>
 </body>
 </html>

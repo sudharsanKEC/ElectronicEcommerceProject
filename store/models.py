@@ -51,11 +51,11 @@ class WebAppAdmin(models.Model):
         return f"{self.name}({self.unique_id})"
 
 class Shop(models.Model):
-    shop_id = models.AutoField(primary_key = True)
+    shop_id = models.CharField(max_length=50, primary_key = True)
     district = models.ForeignKey(District, on_delete = models.CASCADE,related_name="shops")
     shop_name = models.CharField(max_length=150)
     address = models.TextField()
-    unique_id = models.CharField(max_length=50, unique=True, editable=False)
+    # unique_id = models.CharField(max_length=50, unique=True, editable=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     status = models.CharField(
@@ -65,13 +65,13 @@ class Shop(models.Model):
     )
 
     def save(self, *args, **kwargs):
-        if not self.unique_id:
+        if not self.shop_id:
             district_code = self.district.district_name.upper()
             shop_count = Shop.objects.filter(district=self.district).count()+1
-            self.unique_id = f"{district_code}_SHOP_{shop_count:03d}"
+            self.shop_id = f"{district_code}_SHOP_{shop_count:03d}"
         super().save(*args, **kwargs)
     def __str__(self):
-        return f"{self.shop_name} ({self.unique_id})"
+        return f"{self.shop_name} ({self.shop_id})"
 
 
 class ShopAdmin(models.Model):
