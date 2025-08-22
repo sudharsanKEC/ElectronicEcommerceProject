@@ -3,9 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop's page</title>
+    <title>{{shop.shop_name}} page</title>
 </head>
 <body>
-    
+    <h2>Name of the shop: {{shop.shop_name}}</h2>
+    <h2>Address: {{shop.address}}</h2>
+    {% if admins %}
+        {% for admin in admins %}
+                <h2>Admin: {{admin.admin_name}}</h2>
+                <h2>Admin Id: {{admin.admin_id}}</h2>
+        {% endfor %}
+    {% else %}
+        <p>No admins created yet. Create? <a href="#" id="showAdminForm">Click here</a></p>
+    {% endif %}
+    {%if messages%}
+    {%for message in messages%}
+        <p>{{ message }}</p>
+    {%endfor%}
+    {%endif%}
+    <div id="adminFormContainer" style="display:none; margin-top:10px;">
+        <form method="POST" action="{% url 'create_shopAdmin' shop.shop_unique_id%}">
+            {% csrf_token %}
+            <input type="text" name="admin_name" placeholder="Enter shop admin name" required> <br><br>
+            <input type="email" name="email" placeholder="Enter admins email" required> <br><br>
+            <input type="password" name="password1" placeholder="Enter password" required> <br><br>
+            <input type="password" name="password2" placeholder="Re-enter password to confirm" required> <br><br>
+            <button type="submit">Create admin</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById('showAdminForm').addEventListener('click',function(e){
+            e.preventDefault();
+            document.getElementById('adminFormContainer').style.display = 'block';
+        });
+    </script>
 </body>
 </html>

@@ -78,3 +78,37 @@ def shopCreation(request):
             messages.success(request,"Shop created successfully")
         return redirect("waaDashboard",unique_id=request.POST['unique_id'])
     return HttpResponse("Invalid request",status=400)
+
+
+def shopManagement(request,shop_unique_id):
+    shop = Shop.objects.filter(shop_unique_id=shop_unique_id).first()
+    admins = shop.admins.all()
+    return render(request,"WebAppAdmin/ShopDetails.html",{
+        "shop":shop,
+        "admins":admins
+    })
+
+
+def create_shopAdmin(request,shop_unique_id):
+    shop = Shop.objects.filter(shop_unique_id=shop_unique_id).first()
+    if request.method == 'POST':
+        admin_name = request.POST['admin_name']
+        email = request.POST['email']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+        if password1 != password2:
+            messages.error(request,"Passwords doesnt match")
+            return redirect("shopManagement",shop_unique_id=shop_unique_id)
+        if ShopAdmin.objects.filter(email=email).exists():
+            messages.error(request,"Email already exists!")
+            return redirect("shopManagement",shop_unique_id=shop_unique_id)
+        ShopAdmin.objects.create(admin_name=admin_name,email=email,password=password1,shop=shop,region=shop.district)
+        messages.success(request,"Admin created successfully")
+        return redirect('shopManagement',shop_unique_id=shop_unique_id)
+    
+    
+
+
+
+
+

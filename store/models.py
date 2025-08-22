@@ -85,9 +85,18 @@ class ShopAdmin(models.Model):
     region = models.CharField(max_length=100,blank=False,null=False)
     
     def save(self, *args, **kwargs):
+        districts = {
+            "Erode":"ER",
+            "Coimbatore":"CBE",
+            "Tiruppur":"TPR",
+            "Karur":"KRR",
+            "Namakkal":"NKL",
+            "Salem":"SLM"
+        }
         if not self.admin_id:
-            district_code = self.shop.district.district_code.upper()
-            shop_number = self.shop.unique_id.split("_")[-1]
+            district_code = districts[self.shop.district.district_name]
+            print(f"{self.shop.district.district_name}")
+            shop_number = self.shop.shop_unique_id.split("_")[-1]
             admin_count = ShopAdmin.objects.filter(shop=self.shop).count() + 1
             if admin_count > 2:
                 raise ValidationError("A shop can only have 2 admins.")

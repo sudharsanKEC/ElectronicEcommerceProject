@@ -16,18 +16,22 @@
         <th>Shop Id</th>
         <th>Shop Name</th>
         <th>Admin Name</th>
+        <th>Manage Shop</th>
     </tr>
     {% for shop in shops %}
         <tr>
             <td>{{ shop.shop_unique_id }}</td>
             <td>{{ shop.shop_name }}</td>
             <td>
-                {% if shop.admin %}
-                    {{ shop.admin.admin_name }}
+                {% if shop.admins.exists %}
+                    {% for admin in shop.admins.all%}
+                        {{ admin.admin_name}}
+                    {% endfor %}
                 {% else %}
                     No admin
                 {% endif %}
             </td>
+            <td><a href="{% url 'shopManagement' shop.shop_unique_id%}">Click here</a></td>
         </tr>
     {% empty %}
         <tr>
@@ -51,7 +55,7 @@
         <label>Enter the address of the shop</label>
         <textarea id="shop_address" name="shop_address" rows="7" cols="50" placeholder="Enter full address"></textarea> <br><br>
         <button type="submit">Add shop</button>
-
+        
     </form>
 </body>
 </html>
