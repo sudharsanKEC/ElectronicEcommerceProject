@@ -13,6 +13,11 @@ class WebAppAdminAdmin(admin.ModelAdmin):
     search_fields = ('name', 'email', 'unique_id')
 
 @admin.register(Shop)
-class ShopAdmin(admin.ModelAdmin):
+class ShopModelAdmin(admin.ModelAdmin):
     list_display = ('shop_name','address')
+    list_filter = ('district',)
     search_fields = ('name','shop_unique_id')
+
+@admin.register(ShopAdmin)
+class ShopAdminModelAdmin(admin.ModelAdmin):
+    list_display = ('admin_id','admin_name')

@@ -106,7 +106,31 @@ def create_shopAdmin(request,shop_unique_id):
         messages.success(request,"Admin created successfully")
         return redirect('shopManagement',shop_unique_id=shop_unique_id)
     
-    
+def shopAdminAuth(request):
+    if request.method == "POST":
+        email = request.POST['email']
+        password = request.POST['password']
+        region = request.POST['region']
+        sa_obj = ShopAdmin.objects.filter(email=email,region=region).first()
+        if sa_obj:
+            if sa_obj.password == password:
+                name = sa_obj.admin_name
+                shop_id = sa_obj.shop.shop_unique_id 
+                messages.success(request,f"Login Successfull \n Welcome {name}")
+                return redirect('shopAdminDashboard',admin_id=sa_obj.admin_id)
+            else :
+                messages.success(request,"Incorrect password!, Please enter a valid password")
+                return redirect('shopAdminAuth')
+        else:
+            messages.error(request,"Admin Id doesnt exist")
+            return redirect('shopAdminAuth')
+    return render(request,"ShopAdmin/ShopAdminLogin.html",)
+
+def shopAdminDashboard(request,admin_id):
+    sa_obj = ShopAdmin.objects.filter(admin_id=admin_id).first()
+    shop_obj = sa_obj.shop
+    context = {"sa_obj":sa_obj,"shop_obj":shop_obj}
+    return render(request,"ShopAdmin/ShopAdminDashboard.html",context)
 
 
 
