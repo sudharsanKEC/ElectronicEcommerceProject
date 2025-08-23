@@ -105,6 +105,29 @@ class ShopAdmin(models.Model):
     def __str__(self):
         return f"{self.admin_name} ({self.admin_id})"
 
+class Product(models.Model):
+    product_id = models.AutoField(primary_key = True)
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name="products")
+    product_unique_id = models.CharField(max_length=100,unique=True,blank=True)
+    category = models.CharField(max_length=100,blank=False,null=False)
+    name = models.CharField(max_length=200,blank=False,null=False)
+    cost = models.DecimalField(max_digits=10, decimal_places=2)
+    manufactured_date = models.DateField(auto_now=True)
+    description = models.TextField(blank=False,null=False)
+    image = models.ImageField(upload_to="product_images/")
+    stock_quantity = models.PositiveIntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        if not self.product_unique_id:
+            shop_name = self.shop.shop_name.upper().replace(" ","_")
+            category_name = self.category.upper().replace(" ","_")
+            nth_number = Product.objects.filter(shop=self.shop,category=self.category).count()+1
+            self.product_unique_id = f"{shop_name}_{category_name}_{nth_number}"
+        super(Product,self).save(*args,**kwargs)
+    def __str__(self):
+        return f"{self.name} ({self.product_unique_id})"
 
 
 
