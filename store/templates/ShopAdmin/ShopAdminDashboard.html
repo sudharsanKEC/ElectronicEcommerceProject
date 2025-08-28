@@ -8,5 +8,29 @@
 <body>
     <h1>Shop Admin dashboard page</h1>
     <h1>Your shop: {{ shop_obj.shop_name }}</h1>
+    <table border="1">
+        <tr >
+            <th>Product_id</th>
+            <th>Product_unique_id</th>
+            <th>Category</th>
+            <th>Name</th>
+            <th>Stock Availability</th>
+        </tr>
+        {%if shop.products.exists%}
+            {% for product in shop.products %}
+            <tr>
+                <td>shop.products.product_id</td>
+                <td>shop.products.product_unique_id</td>
+                <td>shop.products.category</td>
+                <td>shop.products.name</td>
+                <td>shop.products.stock_quantity</td>
+            </tr>
+            {%endfor%}
+        {%else%}
+            <tr>
+                <td colspan="5">No products added right now</td>
+            </tr>
+        {%endif%}
+    </table>
 </body>
 </html>
