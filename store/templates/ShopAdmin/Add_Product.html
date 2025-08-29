@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adding Products to your shop</title>
+</head>
+<body>
+    <h2>Enter the product details</h2>
+    <form method="POST" action="{% url 'productAdding' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <select name="category" id="category">
+            <option value="" disabled selected hidden>Select Category</option>
+            <option value="MobileAccessories">Mobiles&Accessories</option>
+            <option value="ComputersLaptop">Computers and Laptop</option>
+            <option value="AudioAndVideo">Audio and Video</option>
+            <option value="CamerasAndPhotogrpahy">Cameras and Photography</option>
+            <option value="GamingAndConsoles">Gaming&Consoles</option>
+            <option value="HomeAppliances">Home Appliances</option>
+            <option value="PersonalCareElectronics">Personal Care Electronics</option>
+            <option value="MiscellaneousAccessories">Miscellaneous&Accessories</option>
+        </select> <br> <br>
+        <label for="productName">Name:</label> <br><br>
+        <input type="text" id="productName" name="productName"> <br> <br>
+        <label for="cost">Enter the cost of product:</label> <br> <br>
+        <input type="number" id="cost" name="cost"> <br> <br>
+        <!-- <label for="manufactured_date">Enter the Manufactured date of the product:</label> <br> <br>
+        <input type="date" id="manufactured_date" name="manufactured_date"> <br> <br> -->
+        <label for="description">Enter the description of the product:</label> <br> <br>
+        <textarea id="description" name="description" rows="5" cols="50"></textarea> <br> <br>
+        <label for="stock_quantity">Enter the quantity of the available stock</label> <br> <br>
+        <input type="number" id="stock_quantity" name="stock_quantity"> <br> <br>
+        <label for="product_Image">Enter the image of the product</label> <br> <br>
+        <input type="file" id="product_image" name="product_image" accept="image/*" required> <br> <br>
+        <button type="submit">Add to Inventory</button>
+    </form>
+    <h2><a href="{% url 'shopAdminDashboard' admin_id%}"><button>Go back to dashboard page</button></a></h2>
+</body>
+</html>

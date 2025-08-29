@@ -12,4 +12,6 @@ urlpatterns = [
     path("create_shopAdmin/<str:shop_unique_id>",views.create_shopAdmin,name = "create_shopAdmin"),
     path("shopAdminLoginPage/",views.shopAdminAuth,name="shopAdminAuth"),
     path("shopAdminDashboard/<str:admin_id>",views.shopAdminDashboard,name="shopAdminDashboard"),
+    path("shopAdminProductAdd/<str:admin_id>",views.sa_add_products,name="shopAdminProductAdd"),
+    path("productAdding/",views.productAdding,name="productAdding"),
 ]

@@ -128,11 +128,15 @@ def shopAdminAuth(request):
 
 def shopAdminDashboard(request,admin_id):
     sa_obj = ShopAdmin.objects.filter(admin_id=admin_id).first()
+    # if not sa_obj:
+    #     return HttpResponse(f"No shopAdmin with admin id = {admin_id}")
     shop_obj = sa_obj.shop
     context = {"sa_obj":sa_obj,"shop_obj":shop_obj}
     return render(request,"ShopAdmin/ShopAdminDashboard.html",context)
 
 
+def sa_add_products(request,admin_id):
+    return render(request,"ShopAdmin/Add_Product.html",{"admin_id":admin_id})
 
-
-
+def productAdding(request):
+    return HttpResponse("Product added")

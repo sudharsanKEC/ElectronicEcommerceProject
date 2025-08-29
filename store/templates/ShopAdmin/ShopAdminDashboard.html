@@ -16,14 +16,14 @@
             <th>Name</th>
             <th>Stock Availability</th>
         </tr>
-        {%if shop.products.exists%}
-            {% for product in shop.products %}
+        {%if shop_obj.products.exists%}
+            {% for product in shop_obj.products %}
             <tr>
-                <td>shop.products.product_id</td>
-                <td>shop.products.product_unique_id</td>
-                <td>shop.products.category</td>
-                <td>shop.products.name</td>
-                <td>shop.products.stock_quantity</td>
+                <td>products.product_id</td>
+                <td>products.product_unique_id</td>
+                <td>products.category</td>
+                <td>products.name</td>
+                <td>products.stock_quantity</td>
             </tr>
             {%endfor%}
         {%else%}
@@ -32,5 +32,6 @@
             </tr>
         {%endif%}
     </table>
+    <h3><a href="{% url 'shopAdminProductAdd' sa_obj.admin_id%}">Click here</a> to add products to your inventory</h3>
 </body>
 </html>
