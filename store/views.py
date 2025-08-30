@@ -128,8 +128,8 @@ def shopAdminAuth(request):
 
 def shopAdminDashboard(request,admin_id):
     sa_obj = ShopAdmin.objects.filter(admin_id=admin_id).first()
-    # if not sa_obj:
-    #     return HttpResponse(f"No shopAdmin with admin id = {admin_id}")
+    if not sa_obj:
+        return HttpResponse(f"No shopAdmin with admin id = {admin_id}")
     shop_obj = sa_obj.shop
     context = {"sa_obj":sa_obj,"shop_obj":shop_obj}
     return render(request,"ShopAdmin/ShopAdminDashboard.html",context)
@@ -138,5 +138,24 @@ def shopAdminDashboard(request,admin_id):
 def sa_add_products(request,admin_id):
     return render(request,"ShopAdmin/Add_Product.html",{"admin_id":admin_id})
 
-def productAdding(request):
-    return HttpResponse("Product added")
+def productAdding(request,admin_id):
+    if request.method == "POST":
+        shop = ShopAdmin.objects.filter(admin_id = admin_id).first().shop
+        category = request.POST["category"]
+        name = request.POST["productName"]
+        cost = request.POST['cost']
+        description = request.POST['description']
+        stock_quantity = request.POST['stock_quantity']
+        image = request.FILES['product_image']
+        Product.objects.create(
+            shop = shop,
+            category = category,
+            name = name,
+            cost = cost,
+            description = description,
+            stock_quantity = stock_quantity,
+            image = image
+        )
+        messages.success(request,"Product added to the inventory successfully")
+        return redirect("productAdding",admin_id=admin_id)
+    return render(request,"ShopAdmin/Add_Product.html",{"admin_id":admin_id})

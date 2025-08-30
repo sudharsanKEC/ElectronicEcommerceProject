@@ -4,10 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adding Products to your shop</title>
+    {% if messages %}
+        {% for message in messages %}
+            <h2>{{ message }}</h2>
+        {% endfor %}
+    {% endif %}
 </head>
 <body>
     <h2>Enter the product details</h2>
-    <form method="POST" action="{% url 'productAdding' %}" enctype="multipart/form-data">
+    <form method="POST" action="{% url 'productAdding' admin_id %}" enctype="multipart/form-data">
         {% csrf_token %}
         <select name="category" id="category">
             <option value="" disabled selected hidden>Select Category</option>

@@ -13,5 +13,5 @@ urlpatterns = [
     path("shopAdminLoginPage/",views.shopAdminAuth,name="shopAdminAuth"),
     path("shopAdminDashboard/<str:admin_id>",views.shopAdminDashboard,name="shopAdminDashboard"),
     path("shopAdminProductAdd/<str:admin_id>",views.sa_add_products,name="shopAdminProductAdd"),
-    path("productAdding/",views.productAdding,name="productAdding"),
+    path("productAdding/<str:admin_id>",views.productAdding,name="productAdding"),
 ]
