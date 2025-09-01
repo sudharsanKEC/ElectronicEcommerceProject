@@ -145,7 +145,7 @@ def productAdding(request,admin_id):
         name = request.POST["productName"]
         cost = request.POST['cost']
         description = request.POST['description']
-        stock_quantity = request.POST['stock_quantity']
+        # stock_quantity = request.POST['stock_quantity']
         image = request.FILES['product_image']
         Product.objects.create(
             shop = shop,
@@ -153,7 +153,7 @@ def productAdding(request,admin_id):
             name = name,
             cost = cost,
             description = description,
-            stock_quantity = stock_quantity,
+            # stock_quantity = stock_quantity,
             image = image
         )
         messages.success(request,"Product added to the inventory successfully")

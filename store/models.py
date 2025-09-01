@@ -115,7 +115,7 @@ class Product(models.Model):
     manufactured_date = models.DateField(auto_now=True)
     description = models.TextField(blank=False,null=False)
     image = models.ImageField(upload_to="product_images/")
-    stock_quantity = models.PositiveIntegerField(default=0)
+    # stock_quantity = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
