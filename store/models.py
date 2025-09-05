@@ -119,16 +119,6 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def save(self, *args, **kwargs):
-        if not self.product_unique_id:
-            shop_name = self.shop.shop_name.upper().replace(" ","_")
-            category_name = self.category.upper().replace(" ","_")
-            nth_number = Product.objects.filter(shop=self.shop,category=self.category).count()+1
-            self.product_unique_id = f"{shop_name}_{category_name}_{nth_number}"
-        super(Product,self).save(*args,**kwargs)
-    def __str__(self):
-        return f"{self.name} ({self.product_unique_id})"
-
 
 
 

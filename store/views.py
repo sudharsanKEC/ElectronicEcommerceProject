@@ -1,3 +1,4 @@
+import uuid
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse
 from django.contrib import messages
@@ -140,22 +141,28 @@ def sa_add_products(request,admin_id):
 
 def productAdding(request,admin_id):
     if request.method == "POST":
-        shop = ShopAdmin.objects.filter(admin_id = admin_id).first().shop
+        shop = ShopAdmin.objects.filter(admin_id=admin_id).first().shop
         category = request.POST["category"]
         name = request.POST["productName"]
         cost = request.POST['cost']
         description = request.POST['description']
-        # stock_quantity = request.POST['stock_quantity']
+        stock_quantity = int(request.POST['stock_quantity'])  # convert to int
         image = request.FILES['product_image']
-        Product.objects.create(
-            shop = shop,
-            category = category,
-            name = name,
-            cost = cost,
-            description = description,
-            # stock_quantity = stock_quantity,
-            image = image
-        )
-        messages.success(request,"Product added to the inventory successfully")
-        return redirect("productAdding",admin_id=admin_id)
-    return render(request,"ShopAdmin/Add_Product.html",{"admin_id":admin_id})
+
+        # Loop for quantity and create unique products
+        for i in range(stock_quantity):
+            unique_id = str(uuid.uuid4())  # generates a unique ID
+            Product.objects.create(
+                shop=shop,
+                category=category,
+                name=name,
+                cost=cost,
+                description=description,
+                product_unique_id=unique_id,  # assuming you added this field
+                image=image
+            )
+
+        messages.success(request, f"{stock_quantity} product(s) added successfully to the inventory")
+        return redirect("productAdding", admin_id=admin_id)
+
+    return render(request, "ShopAdmin/Add_Product.html", {"admin_id": admin_id})

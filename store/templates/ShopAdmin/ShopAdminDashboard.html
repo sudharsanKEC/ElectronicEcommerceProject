@@ -14,7 +14,8 @@
             <th>Product_unique_id</th>
             <th>Category</th>
             <th>Name</th>
-            <th>Stock Availability</th>
+            <!-- <th>Stock Availability</th> -->
+             <th>Image</th>
         </tr>
         {%if shop_obj.products.all %}
             {% for product in shop_obj.products.all %}
@@ -23,7 +24,7 @@
                 <td>{{ product.product_unique_id }}</td>
                 <td>{{ product.category }}</td>
                 <td>{{ product.name }}</td>
-                <td>{{ product.stock_quantity }}</td>
+                <!-- <td>{{ product.stock_quantity }}</td> -->
                 <td>
                     <img src="{{ product.image.url }}" alt="{{ product.name }}" width="100" height="100">
                 </td>
