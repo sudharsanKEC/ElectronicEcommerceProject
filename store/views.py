@@ -166,3 +166,7 @@ def productAdding(request,admin_id):
         return redirect("productAdding", admin_id=admin_id)
 
     return render(request, "ShopAdmin/Add_Product.html", {"admin_id": admin_id})
+
+
+def customer_signup(request):
+    return render(request,"Customer/Customer_signup.html")

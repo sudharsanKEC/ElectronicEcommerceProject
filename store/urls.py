@@ -14,4 +14,7 @@ urlpatterns = [
     path("shopAdminDashboard/<str:admin_id>",views.shopAdminDashboard,name="shopAdminDashboard"),
     path("shopAdminProductAdd/<str:admin_id>",views.sa_add_products,name="shopAdminProductAdd"),
     path("productAdding/<str:admin_id>",views.productAdding,name="productAdding"),
+
+    # starting customer page development
+    path("customer_signup/",views.customer_signup,name="customer_signup")
 ]

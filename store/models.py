@@ -119,6 +119,16 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+class Customer(models.Model):
+    name=models.CharField(max_length=100,null=False,blank=False)
+    email=models.EmailField(unique=True)
+    password=models.CharField(max_length=100,null=False,blank=False)
+    region=models.CharField(max_length=100,blank=False,null=False)
+    phone_number=models.CharField(max_length=15,unique=True)
+    residential_place=models.CharField(max_length=100,blank=False,null=False)
+    created_at=models.DateTimeField(auto_now_add=True)
+
+
 
 
 
