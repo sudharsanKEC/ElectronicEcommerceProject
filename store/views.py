@@ -169,4 +169,43 @@ def productAdding(request,admin_id):
 
 
 def customer_signup(request):
+    if request.method=="POST":
+        name = request.POST["user-name"]
+        mail = request.POST['user-mail']
+        mobile_no = request.POST['mobile-no']
+        pass1 = request.POST['password1']
+        pass2 = request.POST['password2']
+        region = request.POST['region']
+        resident = request.POST['resident']
+        if Customer.objects.filter(email=mail).exists():
+            messages.error(request,"User already exists with this email ID")
+            return redirect("customer_signup")
+        elif pass1!=pass2:
+            messages.error(request,"Passwords doesnt match each other")
+            return redirect("customer_signup")
+        else:
+            customer = Customer.objects.create(name=name,email=mail,password=pass1,region=region,phone_number=mobile_no,residential_place=resident)
+            messages.success(request,"Customer account created successfully")
+            return redirect("customer_dashboard",id=customer.id)
+
     return render(request,"Customer/Customer_signup.html")
+
+def customer_login(request):
+    if request.method == "POST":
+        email = request.POST["mail"]
+        password = request.POST["password"]
+        customer = Customer.objects.filter(email=email).first()
+        if customer:
+            if customer.password == password:
+                messages.success(request,"Login successfull")
+                return redirect("customer_dashboard",id=customer.id)
+            else:
+                messages.error(request,"Incorrect password")
+                return redirect("customer_login")
+        else:
+            messages.error(request,"No account found for the given mail ID")
+            return redirect("customer_login")
+    return render(request,"Customer/customer_login.html")
+def customer_dashboard(request,id):
+    customer = Customer.objects.filter(id=id).first()
+    return HttpResponse(f"Welcome {customer.name}")

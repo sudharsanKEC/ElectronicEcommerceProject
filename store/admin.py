@@ -25,3 +25,7 @@ class ShopAdminModelAdmin(admin.ModelAdmin):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('product_id','shop','product_unique_id')
+
+@admin.register(Customer)
+class CustomerAdmin(admin.ModelAdmin):
+    list_display = ('id','name','email','password')

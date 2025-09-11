@@ -16,5 +16,7 @@ urlpatterns = [
     path("productAdding/<str:admin_id>",views.productAdding,name="productAdding"),
 
     # starting customer page development
-    path("customer_signup/",views.customer_signup,name="customer_signup")
+    path("customer_signup/",views.customer_signup,name="customer_signup"),
+    path("customer_login/",views.customer_login,name="customer_login"),
+    path("customer_dashboard/<int:id>",views.customer_dashboard,name="customer_dashboard"),
 ]
