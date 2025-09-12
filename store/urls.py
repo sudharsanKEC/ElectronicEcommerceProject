@@ -25,4 +25,6 @@ urlpatterns = [
     path("customer_logout/",views.customer_logout,name="customer_logout"),
     path("product_search/<int:id>",views.product_search,name="product_search"),
     path("place_order/<int:customer_id>/<int:product_id>/",views.place_order, name="place_order"),
+    path("add_to_wishlist/<int:customer_id>/<int:product_id>/",views.add_to_wishlist,name="add_to_wishlist")
+    
 ]

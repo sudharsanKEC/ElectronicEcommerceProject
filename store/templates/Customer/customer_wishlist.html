@@ -1,0 +1,32 @@
+{% extends "Customer/base_customer.html" %}
+
+{% block title %}My Wishlist{% endblock %}
+
+{% block content %}
+<h2>My Wishlist</h2>
+<hr>
+
+{% if wishlist_items %}
+    <div class="row">
+        {% for item in wishlist_items %}
+        <div class="col-md-3 mb-4">
+            <div class="card h-100 shadow-sm">
+                {% if item.product.image %}
+                    <img src="{{ item.product.image.url }}" class="card-img-top" alt="{{ item.product.name }}" style="height:200px; object-fit:cover;">
+                {% else %}
+                    <img src="https://via.placeholder.com/200" class="card-img-top" alt="No image">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.product.name }}</h5>
+                    <p class="card-text text-muted">₹{{ item.product.cost }}</p>
+                    <a href="{% url 'place_order' customer.id item.product.product_id %}" class="btn btn-sm btn-primary">Order</a>
+                    <a href="#" class="btn btn-sm btn-outline-danger">Remove</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p class="text-muted">No items in your wishlist yet.</p>
+{% endif %}
+{% endblock %}

@@ -257,3 +257,26 @@ def customer_orders(request,id):
         "customer":customer,
         "orders":orders
     })
+
+def add_to_wishlist(request,customer_id,product_id):
+    customer = Customer.objects.get(id=customer_id)
+    product = Product.objects.get(product_id=product_id)
+
+    existing = Wishlist.objects.filter(customer = customer, product = product).first()
+
+    if existing:
+        messages.info(request,f"{product.name} is already in you wishlist.")
+    else:
+        Wishlist.objects.create(customer=customer, product=product)
+        messages.success(request,f"{product.name} added to your wishlist!")
+    
+    return redirect("customer_wishlist",id=customer.id)
+
+def customer_wishlist(request,id):
+    customer = Customer.objects.get(id=id)
+    wishlist_items = Wishlist.objects.filter(customer=customer).select_related("product").order_by("-added_at")
+
+    return render(request,"Customer/customer_wishlist.html", {
+        "customer": customer,
+        "wishlist_items": wishlist_items
+    })
