@@ -215,9 +215,6 @@ def customer_dashboard(request,id):
 def customer_profile(request,id):
     return HttpResponse("Customer profile page")
 
-def customer_orders(request,id):
-    return HttpResponse("Placed orders")
-
 def customer_wishlist(request,id):
     return HttpResponse("Items in cart")
 
@@ -242,3 +239,21 @@ def product_search(request,id):
 def customer_profile(request,id):
     customer = Customer.objects.filter(id=id).first()
     return render(request,"Customer/customer_profile.html",{"customer":customer})
+
+def place_order(request, customer_id, product_id):
+    customer = Customer.objects.get(id=customer_id)
+    product = Product.objects.get(product_id=product_id)
+
+    Order.objects.create(customer=customer,product=product,quantity=1)
+
+    messages.success(request,f"{product.name} ordered successfully!")
+    return redirect("customer_orders",id=customer.id)
+
+def customer_orders(request,id):
+    customer = Customer.objects.get(id=id)
+    orders = Order.objects.filter(customer=customer).select_related("product").order_by("-ordered_at")
+
+    return render(request,"Customer/customer_orders.html",{
+        "customer":customer,
+        "orders":orders
+    })

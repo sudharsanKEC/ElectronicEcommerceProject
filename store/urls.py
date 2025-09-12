@@ -24,5 +24,5 @@ urlpatterns = [
     path("customer_wishlist/<int:id>",views.customer_wishlist,name="customer_wishlist"),
     path("customer_logout/",views.customer_logout,name="customer_logout"),
     path("product_search/<int:id>",views.product_search,name="product_search"),
-    
+    path("place_order/<int:customer_id>/<int:product_id>/",views.place_order, name="place_order"),
 ]
