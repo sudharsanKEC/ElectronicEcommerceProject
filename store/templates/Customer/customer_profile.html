@@ -1,0 +1,16 @@
+{% extends "Customer/base_customer.html" %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm p-4">
+    <h2 class="mb-3">Profile</h2>
+    <hr>
+    <p><strong>Name:</strong> {{ customer.name }}</p>
+    <p><strong>Email:</strong> {{ customer.email }}</p>
+    <p><strong>Phone:</strong> {{ customer.phone_number }}</p>
+    <p><strong>Region:</strong> {{ customer.region }}</p>
+    <p><strong>Residential Place:</strong> {{ customer.residential_place }}</p>
+    <p><strong>Account Created:</strong> {{ customer.created_at|date:"M d, Y" }}</p>
+</div>
+{% endblock %}

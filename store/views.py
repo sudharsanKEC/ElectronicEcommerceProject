@@ -3,6 +3,7 @@ from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse
 from django.contrib import messages
 from .models import *
+from django.db.models import Q
 # Create your views here.
 
 def rolePage(request):
@@ -207,5 +208,37 @@ def customer_login(request):
             return redirect("customer_login")
     return render(request,"Customer/customer_login.html")
 def customer_dashboard(request,id):
+    customer = get_object_or_404(Customer, id=id)
+    products = Product.objects.all()
+    return render(request,"Customer/Customer_dashboard.html",{"customer":customer,"products":products})
+
+def customer_profile(request,id):
+    return HttpResponse("Customer profile page")
+
+def customer_orders(request,id):
+    return HttpResponse("Placed orders")
+
+def customer_wishlist(request,id):
+    return HttpResponse("Items in cart")
+
+def customer_logout(request):
+    return HttpResponse("Log out page")
+
+def product_search(request,id):
+    query = request.GET.get("q", "")
+    products = []
+
+    if query:
+        products = Product.objects.filter(
+            Q(name__icontains=query) | Q(description__icontains=query)
+        )
+    customer = get_object_or_404(Customer, id=id)
+    return render(request, "Customer/search_results.html", {
+        "query": query,
+        "products": products,
+        "customer":customer
+    })
+
+def customer_profile(request,id):
     customer = Customer.objects.filter(id=id).first()
-    return HttpResponse(f"Welcome {customer.name}")
+    return render(request,"Customer/customer_profile.html",{"customer":customer})

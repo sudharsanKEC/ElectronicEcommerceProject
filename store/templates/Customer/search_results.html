@@ -1,0 +1,33 @@
+{% extends "Customer/base_customer.html" %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+<h2>Search Results for "{{ query }}"</h2>
+<hr>
+
+{% if products %}
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-3 mb-4">
+            <div class="card h-100 shadow-sm">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                {% else %}
+                    <img src="https://via.placeholder.com/200" class="card-img-top" alt="No image">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text text-muted">₹{{ product.price }}</p>
+                    <p class="card-text">{{ product.description|truncatewords:10 }}</p>
+                    <a href="#" class="btn btn-sm btn-primary">Add to Cart</a>
+                    <a href="#" class="btn btn-sm btn-outline-danger">Wishlist</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p class="text-muted">No products found.</p>
+{% endif %}
+{% endblock %}
